@@ -110,22 +110,30 @@
         const moles = document.querySelectorAll('.mole');
         
         function startGame() {
-            // Algorithm:
-            // 1. Reset game variables: score starts at 0, timer starts at max, mole visibility, etc.          
-            // 2. Update JS variables and HTML elements to reflect this.            
-            // 3. Start the mole movement interval using setInterval().
-            //    e.g., - gameTimer = setInterval(randomHole, 1000); // Move mole every second
-            // 4. Start the countdown timer using setInterval().            
+            score = 0;
+            timeLeft = 30;
+            scoreBoard.textContent = `Score: ${score}`;
+            timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+            
+            // Start timers for mole movement and game countdown
+            gameTimer = setInterval(countDown, 1000);
+            moleTimer = setInterval(randomHole, 1000);
+
+            startButton.disabled = true; // Disable start button to prevent multiple clicks
         }
 
         // TODO: mole movement logic
         function randomHole() {
-            // Algorithm:
-            // 1. Hide the mole in the previous hole (if any).           
-            // 2. Generate a random index to select a new hole. 
-            //      hint: you need to then find all "mole holes" and randomly choose one from the list.           
-            // 3. Show the mole in the new hole.            
-            // 4. Add a click event listener to the mole to handle "whacking".            
+            if (currentHole) {
+                currentHole.querySelector('.mole').style.display = 'none'; // Hide previous mole
+            }
+
+            const randomIndex = Math.floor(Math.random() * holes.length);
+            currentHole = holes[randomIndex];
+            currentHole.querySelector('.mole').style.display = 'block'; // Show new mole
+
+            // Add click event listener to mole
+            currentHole.querySelector('.mole').addEventListener('click', whackMole);
         }
 
         // TODO: whack mole game logic
