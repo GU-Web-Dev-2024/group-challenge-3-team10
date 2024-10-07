@@ -97,15 +97,18 @@
 
     <script>
         // Set up local variables
-        // Hint: Declare variables for score, currentHole, gameTimer, timeLeft, moleVisible, etc.
-
-        // Get references to DOM elements
-        // Example:
-        // const startButton = document.getElementById('startButton');
-
-        // Add event listener to the start button        
-
-        // TODO: start game logic
+        let score = 0;
+        let timeleft = 30; 
+        let gameTimer;
+        let moleTimer;
+        let CurrentHole = null;
+    
+        const startButton = document.getElementById('startButton');
+        const scoreBoard = document.getElementById('score-board');
+        const timerDisplay = document.getElementById('timer');
+        const holes = document.querySelectorAll('.hole');
+        const moles = document.querySelectorAll('.mole');
+        
         function startGame() {
             // Algorithm:
             // 1. Reset game variables: score starts at 0, timer starts at max, mole visibility, etc.          
