@@ -136,23 +136,47 @@
             currentHole.querySelector('.mole').addEventListener('click', whackMole);
         }
 
+        // Function to update the countdown timer
+        function countDown() {
+            timeLeft--;
+            timerDisplay.textContent = `Time Left: ${timeLeft}s`;
+
+            if (timeLeft <= 0) {
+                clearInterval(gameTimer);
+                clearInterval(moleTimer);
+                endGame();
+            }
+        }
+
         // TODO: whack mole game logic
         function whack() {
-            // Algorithm:
-            // 0. if the mole is visible...
-            // 1. Increase the score.           
-            // 2. Update the score display in the HTML.           
-            // 3. Hide the mole after it's whacked.            
+            score++;
+            scoreBoard.textContent = `Score: ${score}`;
+            this.style.display = 'none'; // Hide the mole after whacking
         }
 
         // TODO: end game logic function
         function endGame() {
-            // Algorithm:
-            // 1. Stop the mole movement and countdown timers using clearInterval().            
-            // 2. Hide any remaining mole on the grid.            /
-            // 3. Display an alert or message showing the final score.            
-            // 4. Reset the game to allow playing again.
+            clearInterval(moleTimer);
+            clearInterval(gameTimer);
+            alert(`Game Over! Your final score is: ${score}`);
+            startButton.disabled = false; // Re-enable start button for replay
+            resetGame();
         }
+
+        // Function to reset the game
+        function resetGame() {
+            score = 0;
+            timeLeft = 30;
+            scoreBoard.textContent = `Score: 0`;
+            timerDisplay.textContent = `Time Left: 30s`;
+            if (currentHole) {
+                currentHole.querySelector('.mole').style.display = 'none'; // Hide any remaining mole
+            }
+        }
+
+        // Add event listener to start button
+        startButton.addEventListener('click', startGame);
 
         // Helpful Tips:
         // - Use setInterval() to create "loops" for mole movement and countdown timer.
